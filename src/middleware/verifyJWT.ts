@@ -14,6 +14,8 @@ export default async function verifyJWT(
     const authorization = req.headers.authorization;
     const jwt = authorization?.split(" ")?.[1];
     if (!authorization || !jwt) {
+        console.log(authorization);
+        console.log(jwt);
         return res.status(401).json({ status: "fail", message: "Unauthorized" });
     }
 
