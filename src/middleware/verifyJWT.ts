@@ -2,11 +2,7 @@ import { clerkClient } from "@clerk/clerk-sdk-node";
 import { NextFunction, Request, Response } from "express";
 import jsonwebtoken from "jsonwebtoken";
 import prisma from "../../prisma";
-
-const JWT_SECRET = process.env.CLERK_PEM_PUBLIC_KEY;
-if (!JWT_SECRET) {
-    throw new Error("Environment variable JWT_SECRET must be set.");
-}
+import { JWT_SECRET } from "../constants";
 
 const PENDING_KYC_STATUSES = ["PENDING", "REJECTED"];
 
