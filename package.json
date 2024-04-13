@@ -25,6 +25,10 @@
     "openai": "^4.33.1",
     "openapi": "^1.0.1",
     "prisma": "^5.12.1",
-    "typescript": "^5.4.5"
+    "typescript": "^5.4.5",
+    "uuid": "^9.0.1"
+  },
+  "devDependencies": {
+    "@types/uuid": "^9.0.8"
   }
 }

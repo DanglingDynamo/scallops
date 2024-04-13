@@ -2,7 +2,8 @@ import dotenv from "dotenv";
 import express, { Request, Response } from "express";
 import verifyJWT from "./middleware/verifyJWT";
 import kycRouter from "./routes/kyc.router";
-import { storeRouter } from "./routes/storeRouter";
+import { storeRouter } from "./routes/store.router";
+import { accountRouter } from "./routes/account.router";
 import { loadConstants } from "./constants";
 
 dotenv.config();
@@ -29,6 +30,7 @@ app.get("/ping", (_req: Request, res: Response) => {
 app.use("/api/v1/kyc", verifyJWT, kycRouter);
 
 app.use("/api/v1/", storeRouter);
+app.use("/api/v1/", accountRouter);
 
 app.listen(PORT, () => {
     console.log(`Server is running on http://127.0.0.1:${PORT}`);
