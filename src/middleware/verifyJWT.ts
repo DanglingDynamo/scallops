@@ -22,7 +22,7 @@ export default async function verifyJWT(req: Request, res: Response, next: NextF
     return res.status(401).json({ status: "fail", message: "Unauthorized" });
   }
 
-  const aat = req.headers["x-aat"];
+  // const aat = req.headers["x-aat"];
 
   try {
     if (JWT_SECRET) {
@@ -50,18 +50,18 @@ export default async function verifyJWT(req: Request, res: Response, next: NextF
         });
       }
 
-      if (!dbUser?.kycRecord) {
-        if (!(req.path === "/api/v1/kyc" && req.method === "POST")) {
-          return res.status(403).json({
-            status: "fail",
-            message: "KYC Not Completed",
-          });
-        }
-      }
+      // if (!dbUser?.kycRecord) {
+      //   if (!(req.path === "/api/v1/kyc" && req.method === "POST")) {
+      //     return res.status(403).json({
+      //       status: "fail",
+      //       message: "KYC Not Completed",
+      //     });
+      //   }
+      // }
 
-      if (PENDING_KYC_STATUSES.includes(dbUser?.kycRecord?.status || "") && !(aat === SCALLOPS_ROOT_TOKEN)) {
-        return res.status(202).json({ status: "success", message: "KYC Verification Pending" });
-      }
+      // if (PENDING_KYC_STATUSES.includes(dbUser?.kycRecord?.status || "") && !(aat === SCALLOPS_ROOT_TOKEN)) {
+      //   return res.status(202).json({ status: "success", message: "KYC Verification Pending" });
+      // }
 
       req["clerkUserId"] = clerkUser.id;
 
