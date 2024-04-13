@@ -25,15 +25,14 @@ enum KYCStatus {
 }
 
 enum OrderType {
-    ONDC
-    LOCAL
+  ONDC
+  LOCAL
 }
 
 enum PaymentType {
-    CASH
-    ONLINE
+  CASH
+  ONLINE
 }
-
 
 model User {
   id      String @id @default(uuid())
@@ -93,8 +92,8 @@ model Account {
   storeID String @unique
   store   Store  @relation(fields: [storeID], references: [id])
 
-  createdAt DateTime @default(now())
-  updatedAt DateTime?  @updatedAt
+  createdAt DateTime  @default(now())
+  updatedAt DateTime? @updatedAt
 }
 
 model Product {
@@ -120,15 +119,14 @@ model Product {
 }
 
 model Order {
-  id               String @id @default(uuid())
-  buyer            String
-  delivery_address String
+  id    String @id @default(uuid())
+  buyer String
 
   storeID String
   store   Store  @relation(fields: [storeID], references: [id])
 
   products OrderProduct[]
-  payment Payment?
+  payment  Payment?
 
   buyer_side_hook String
 
@@ -154,17 +152,16 @@ model OrderProduct {
 }
 
 model Payment {
-    id String @unique @default(uuid())
-    amount Float
+  id     String @unique @default(uuid())
+  amount Float
 
-    receipt String
+  receipt String
 
-    orderID String @unique
-    order Order @relation(fields: [orderID], references: [id])
+  orderID String @unique
+  order   Order  @relation(fields: [orderID], references: [id])
 
-    is_paid Boolean
-    is_dispersed Boolean
+  is_paid      Boolean
+  is_dispersed Boolean
 
-    type PaymentType
+  type PaymentType
 }
-
