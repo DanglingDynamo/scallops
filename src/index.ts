@@ -1,7 +1,7 @@
 import dotenv from "dotenv";
 import express, { Request, Response } from "express";
 import verifyJWT from "./middleware/verifyJWT";
-import kycRouter from "./routes/kyc-router";
+import kycRouter from "./routes/kyc.router";
 
 dotenv.config();
 
