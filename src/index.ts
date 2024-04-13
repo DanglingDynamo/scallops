@@ -6,6 +6,7 @@ import { accountRouter } from "./routes/account.router";
 import catalogueRouter from "./routes/catalogue.router";
 import kycRouter from "./routes/kyc.router";
 import { storeRouter } from "./routes/store.router";
+import { productRouter } from "./routes/product.router";
 import cors from "cors";
 
 dotenv.config();
