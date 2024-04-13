@@ -3,7 +3,7 @@ import { addProduct, listProducts } from "../controllers/product.controller";
 import { deleteProduct } from "../services/product.service";
 import multer from "multer";
 
-const productRouter = Router();
+export const productRouter = Router();
 
 const upload = multer({ storage: multer.memoryStorage() });
 
@@ -16,4 +16,3 @@ productRouter.post("/", upload.single("file"), addProduct);
 // Delete a product from a store
 productRouter.delete("/:productId", deleteProduct);
 
-export default productRouter;
