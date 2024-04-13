@@ -63,6 +63,9 @@ model Store {
     owner User @relation(fields: [ownerID], references: [id])
 
     account Account?
+
+    products Product[]
+    orders Order[]
 }
 
 model Account {
@@ -77,4 +80,45 @@ model Account {
     account_number BigInt
     branch String
     bank_name String
+}
+
+model Product {
+    id String @id @default(uuid())
+
+    storeID String
+    store Store @relation(fields: [storeID], references: [id])
+
+    name String
+    amount BigInt
+    price Float
+    image String
+    description String
+    barcode BigInt
+
+    orders OrderProduct[]
+}
+
+model Order {
+    id String @id @default(uuid())
+    buyer String
+    delivery_address String
+    
+    storeID String
+    store Store @relation(fields: [storeID], references: [id])
+
+    products OrderProduct[]
+
+    buyer_side_hook String
+}
+
+model OrderProduct {
+    id String @id @default(uuid())
+
+    productID String
+    product Product @relation(fields: [productID], references: [id])
+
+    quantity BigInt
+
+    orderID String
+    order Order @relation(fields: [orderID], references: [id])
 }
