@@ -30,7 +30,7 @@
     "tmp": "^0.2.3"
   },
   "devDependencies": {
-    "@types/uuid": "^9.0.8"
+    "@types/uuid": "^9.0.8",
     "@types/tmp": "^0.2.6"
   }
 }
