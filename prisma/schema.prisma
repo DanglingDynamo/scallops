@@ -34,7 +34,7 @@ model User {
   email String @unique
 
   kycRecord KYCRecord?
-  store Store?
+  store     Store?
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -56,69 +56,85 @@ model KYCRecord {
 }
 
 model Store {
-    id String @id @default(uuid())
-    name String
+  id   String @id @default(uuid())
+  name String
 
-    ownerID String @unique
-    owner User @relation(fields: [ownerID], references: [id])
+  ownerID String @unique
+  owner   User   @relation(fields: [ownerID], references: [id])
 
-    account Account?
+  account Account?
 
-    products Product[]
-    orders Order[]
+  products Product[]
+  orders   Order[]
 }
 
 model Account {
-    id String @id @default(uuid())
+  id String @id @default(uuid())
 
-    storeID String @unique
-    store Store @relation(fields: [storeID], references: [id])
+  balance Float
 
-    balance Float
-    beneficiary String
-    ifsc_code String
-    account_number BigInt
-    branch String
-    bank_name String
+  beneficiary    String
+  ifsc_code      String
+  account_number BigInt
+  branch         String
+  bank_name      String
+
+  storeID String @unique
+  store   Store  @relation(fields: [storeID], references: [id])
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now()) @updatedAt
 }
 
 model Product {
-    id String @id @default(uuid())
+  id String @id @default(uuid())
 
-    storeID String
-    store Store @relation(fields: [storeID], references: [id])
+  name        String
+  description String
 
-    name String
-    amount BigInt
-    price Float
-    image String
-    description String
-    barcode BigInt
+  price    Float
+  quantity Int
 
-    orders OrderProduct[]
+  image String
+
+  barcode BigInt
+
+  orderedUnits OrderProduct[]
+
+  storeID String
+  store   Store  @relation(fields: [storeID], references: [id])
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
 
 model Order {
-    id String @id @default(uuid())
-    buyer String
-    delivery_address String
-    
-    storeID String
-    store Store @relation(fields: [storeID], references: [id])
+  id               String @id @default(uuid())
+  buyer            String
+  delivery_address String
 
-    products OrderProduct[]
+  storeID String
+  store   Store  @relation(fields: [storeID], references: [id])
 
-    buyer_side_hook String
+  products OrderProduct[]
+
+  buyer_side_hook String
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
 
 model OrderProduct {
-    id String @id @default(uuid())
+  id String @id @default(uuid())
 
-    productID String
-    product Product @relation(fields: [productID], references: [id])
+  productID String
+  product   Product @relation(fields: [productID], references: [id])
 
-    quantity BigInt
+  quantity BigInt
 
-    orderID String
-    order Order @relation(fields: [orderID], references: [id])
+  orderID String
+  order   Order  @relation(fields: [orderID], references: [id])
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
