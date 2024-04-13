@@ -1,6 +1,6 @@
 import { clerkClient } from "@clerk/clerk-sdk-node";
 import { NextFunction, Request, Response } from "express";
-import jsonwebtoken from "jsonwebtoken";
+import jsonwebtoken, { JwtPayload } from "jsonwebtoken";
 import prisma from "../../prisma";
 import { JWT_SECRET } from "../constants";
 
@@ -14,14 +14,14 @@ export default async function verifyJWT(
     const authorization = req.headers.authorization;
     const jwt = authorization?.split(" ")?.[1];
     if (!authorization || !jwt) {
-        console.log(authorization);
-        console.log(jwt);
         return res.status(401).json({ status: "fail", message: "Unauthorized" });
     }
 
     try {
         if (JWT_SECRET) {
             const decoded = jsonwebtoken.verify(jwt, JWT_SECRET);
+
+            console.log((decoded as JwtPayload).exp);
 
             const userId = decoded.sub;
             if (!userId || !(typeof userId === "string")) {
