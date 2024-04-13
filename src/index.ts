@@ -24,12 +24,7 @@ declare global {
 
 loadConstants();
 
-app.use(
-  cors({
-    origin: "*",
-    allowedHeaders: "*",
-  })
-);
+app.use(cors());
 app.use(express.json());
 
 app.get("/ping", (_req: Request, res: Response) => {
