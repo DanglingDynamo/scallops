@@ -19,6 +19,7 @@ export default async function verifyJWT(
 
     try {
         if (JWT_SECRET) {
+            console.log(JWT_SECRET);
             const decoded = jsonwebtoken.verify(jwt, JWT_SECRET);
 
             console.log((decoded as JwtPayload).exp);
