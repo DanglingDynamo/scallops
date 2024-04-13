@@ -1,6 +1,7 @@
 import dotenv from "dotenv";
 import express, { Request, Response } from "express";
 import verifyJWT from "./middleware/verifyJWT";
+import catalogueRouter from "./routes/catalogue.router";
 import kycRouter from "./routes/kyc.router";
 
 dotenv.config();
@@ -24,6 +25,7 @@ app.get("/", (req: Request, res: Response) => {
 
 app.use(verifyJWT);
 app.use("/api/v1/kyc", kycRouter);
+app.use("/api/v1/catalogue", catalogueRouter);
 
 app.listen(PORT, () => {
   console.log(`Server is running on http://127.0.0.1:${PORT}`);
