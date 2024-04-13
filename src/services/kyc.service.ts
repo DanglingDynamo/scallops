@@ -2,6 +2,18 @@ import { DocumentType, KYCStatus } from "@prisma/client";
 import prisma from "../../prisma";
 
 export async function createKYCRecord(clerkUserId: string, documentType: DocumentType, documentURL: string) {
+  const kycRecordExists = await prisma.kYCRecord.findFirst({
+    where: {
+      user: {
+        clerkId: clerkUserId,
+      },
+    },
+  });
+
+  if (kycRecordExists) {
+    throw new Error("KYC Record Already Exists");
+  }
+
   const kycRecord = await prisma.kYCRecord.create({
     data: {
       user: {
@@ -34,6 +46,18 @@ export async function updateKYCRecordStatus(kycRecordId: string, status: KYCStat
   const kycRecord = await prisma.kYCRecord.update({
     where: { id: kycRecordId },
     data: { status },
+  });
+
+  return kycRecord;
+}
+
+export async function getKYCRecord(clerkUserId: string) {
+  const kycRecord = await prisma.kYCRecord.findFirst({
+    where: {
+      user: {
+        clerkId: clerkUserId,
+      },
+    },
   });
 
   return kycRecord;
