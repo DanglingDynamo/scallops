@@ -27,7 +27,4 @@ export async function transcribeVoiceToCatalogueItems(req: Request, res: Respons
     console.error(`error: ${error}`);
     return res.status(400).json({ status: "fail", message: "Failed To Transcribe Audio" });
   }
-
-  // Implement the controller logic here
-  res.status(200).send("Transcribed catalogue items successfully");
 }

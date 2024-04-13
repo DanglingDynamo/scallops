@@ -58,7 +58,7 @@ export async function addProduct(req: Request, res: Response) {
   const imageURL = await uploadToFirebase(`products/${clerkUserId}/${image.originalname}`, image);
 
   try {
-    const product = await createProduct(user.store.id, name, description, price, quantity, imageURL, barcode);
+    const product = await createProduct(user.store.id, name, description, parseInt(price), parseInt(quantity), imageURL, barcode);
     return res.send({ status: "success", message: "Product added successfully", data: product });
   } catch (error) {
     console.error(`error: ${error}`);
