@@ -1,18 +1,18 @@
 import { Request, Response } from "express";
 import { createProduct, deleteProduct, getProducts } from "../services/product.service";
 import { getUserWithStoreByUserId } from "../services/user.service";
-import uploadToFirebase from "../utils/uploadToFirebase";
 import { toJSON } from "../utils/dtoToResp";
+import uploadToFirebase from "../utils/uploadToFirebase";
 
 export async function listProducts(req: Request, res: Response) {
   const page = req.query.page ? parseInt(req.query.page as string) : 1;
 
-  const clerkUserId = req["clerkUserId"];
-  if (!clerkUserId) {
+  const userId = req["userId"];
+  if (!userId) {
     return res.status(403).send({ status: "fail", message: "Unauthorized" });
   }
 
-  const user = await getUserWithStoreByUserId(clerkUserId);
+  const user = await getUserWithStoreByUserId(userId);
   if (!user) {
     return res.status(404).send({ status: "fail", message: "User not found" });
   }
@@ -40,12 +40,12 @@ export async function addProduct(req: Request, res: Response) {
     return res.status(400).send({ status: "fail", message: "Image is required" });
   }
 
-  const clerkUserId = req["clerkUserId"];
-  if (!clerkUserId) {
+  const userId = req["userId"];
+  if (!userId) {
     return res.status(403).send({ status: "fail", message: "Unauthorized" });
   }
 
-  const user = await getUserWithStoreByUserId(clerkUserId);
+  const user = await getUserWithStoreByUserId(userId);
   if (!user) {
     return res.status(404).send({ status: "fail", message: "User not found" });
   }
@@ -60,7 +60,7 @@ export async function addProduct(req: Request, res: Response) {
     return res.status(400).send({ status: "fail", message: "All fields are required" });
   }
 
-  const imageURL = await uploadToFirebase(`products/${clerkUserId}/${image.originalname}`, image);
+  const imageURL = await uploadToFirebase(`products/${userId}/${image.originalname}`, image);
 
   try {
     const product = await createProduct(user.store.id, name, description, parseFloat(price), parseInt(quantity), imageURL, barcode);

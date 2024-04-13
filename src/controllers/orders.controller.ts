@@ -13,14 +13,14 @@ export interface OrderPayload {
 }
 
 export async function placeOrder(req: Request, res: Response) {
-  const clerkUserId = req["clerkUserId"];
-  if (!clerkUserId) {
+  const userId = req["userId"];
+  if (!userId) {
     return res.status(401).send("Unauthorized");
   }
 
   let store: Store | null = null;
   try {
-    store = await findStore(clerkUserId);
+    store = await findStore(userId);
   } catch (error) {
     return res.status(500).send("Internal server error");
   }
