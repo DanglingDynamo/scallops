@@ -2,6 +2,8 @@ import dotenv from "dotenv";
 import express, { Request, Response } from "express";
 import verifyJWT from "./middleware/verifyJWT";
 import kycRouter from "./routes/kyc.router";
+import { storeRouter } from "./routes/storeRouter";
+import { loadConstants } from "./constants";
 
 dotenv.config();
 
@@ -16,14 +18,17 @@ declare global {
     }
 }
 
+loadConstants();
+
 app.use(express.json());
 
-app.get("/ping", (req: Request, res: Response) => {
+app.get("/ping", (_req: Request, res: Response) => {
     return res.send({ status: "success", message: "pong!" });
 });
 
-app.use(verifyJWT);
-app.use("/api/v1/kyc", kycRouter);
+app.use("/api/v1/kyc", verifyJWT, kycRouter);
+
+app.use("/api/v1/", storeRouter);
 
 app.listen(PORT, () => {
     console.log(`Server is running on http://127.0.0.1:${PORT}`);
