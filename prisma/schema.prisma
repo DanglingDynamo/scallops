@@ -24,6 +24,17 @@ enum KYCStatus {
   REJECTED
 }
 
+enum OrderType {
+    ONDC
+    LOCAL
+}
+
+enum PaymentType {
+    CASH
+    ONLINE
+}
+
+
 model User {
   id      String @id @default(uuid())
   clerkId String @unique
@@ -83,7 +94,7 @@ model Account {
   store   Store  @relation(fields: [storeID], references: [id])
 
   createdAt DateTime @default(now())
-  updatedAt DateTime @default(now()) @updatedAt
+  updatedAt DateTime?  @updatedAt
 }
 
 model Product {
@@ -117,8 +128,11 @@ model Order {
   store   Store  @relation(fields: [storeID], references: [id])
 
   products OrderProduct[]
+  payment Payment?
 
   buyer_side_hook String
+
+  order_type OrderType
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -138,3 +152,19 @@ model OrderProduct {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }
+
+model Payment {
+    id String @unique @default(uuid())
+    amount Float
+
+    receipt String
+
+    orderID String @unique
+    order Order @relation(fields: [orderID], references: [id])
+
+    is_paid Boolean
+    is_dispersed Boolean
+
+    type PaymentType
+}
+
