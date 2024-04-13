@@ -39,20 +39,6 @@ export default class AccountController {
                     .json({ status: "fail", data: { curr_balance: "not a number" } });
             }
 
-<<<<<<< Updated upstream
-      const account = await addAccount({
-        balance: currBalance,
-        beneficiary: String(req.body.beneficiary),
-        ifsc_code: String(req.body.ifsc_code),
-        account_number: BigInt(accountNumber),
-        id: uuidv4(),
-        storeID: String(storeID),
-        branch: String(req.body.branch),
-        bank_name: String(req.body.bank_name),
-        createdAt: new Date(),
-        updatedAt: new Date(),
-      });
-=======
             const account = await addAccount({
                 balance: currBalance,
                 beneficiary: String(req.body.beneficiary),
@@ -65,7 +51,6 @@ export default class AccountController {
                 createdAt: new Date(),
                 updatedAt: null,
             });
->>>>>>> Stashed changes
 
             return res.status(500).json({
                 status: "success",
