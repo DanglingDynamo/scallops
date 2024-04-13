@@ -8,7 +8,7 @@ export async function getProducts(storeId: string, page: number) {
   });
 }
 
-export async function createProduct(storeId: string, name: string, description: string, price: number, quantity: number, image: string, barcode: bigint) {
+export async function createProduct(storeId: string, name: string, description: string, price: number, quantity: number, image: string, barcode: number) {
   return await prisma.product.create({
     data: { storeID: storeId, name, description, price, quantity, image, barcode: BigInt(barcode) },
   });
