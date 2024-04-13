@@ -44,6 +44,8 @@ export default class AccountController {
         storeID: String(storeID),
         branch: String(req.body.branch),
         bank_name: String(req.body.bank_name),
+        createdAt: new Date(),
+        updatedAt: new Date(),
       });
 
       return res.status(500).json({
