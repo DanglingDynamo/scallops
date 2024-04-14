@@ -16,11 +16,11 @@ const app = express();
 const PORT = process.env.PORT || 8080;
 
 declare global {
-  namespace Express {
-    interface Request {
-      userId?: string;
+    namespace Express {
+        interface Request {
+            userId?: string;
+        }
     }
-  }
 }
 
 loadConstants();
@@ -29,7 +29,7 @@ app.use(cors());
 app.use(express.json());
 
 app.get("/ping", (_req: Request, res: Response) => {
-  return res.send({ status: "success", message: "pong!" });
+    return res.send({ status: "success", message: "pong!" });
 });
 
 app.use("/api/v1/auth", authRouter);
@@ -42,5 +42,5 @@ app.use("/api/v1/catalogue", verifyJWT, catalogueRouter);
 app.use("/api/v1/product", verifyJWT, productRouter);
 
 app.listen(PORT, () => {
-  console.log(`Server is running on http://127.0.0.1:${PORT}`);
+    console.log(`Server is running on http://127.0.0.1:${PORT}`);
 });

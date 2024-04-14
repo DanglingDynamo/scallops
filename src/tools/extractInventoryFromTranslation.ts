@@ -16,27 +16,29 @@ O/P JSON Format:
     }
 }`;
 
-export default async function extractInventoryFromTranslation(inventoryTranslation: string) {
-  const inventoryResponse = await openAIClient.chat.completions.create({
-    model: "gpt-3.5-turbo-0125",
-    messages: [
-      { role: "system", content: SYSTEM_PROMPT },
-      { role: "user", content: inventoryTranslation },
-    ],
-    temperature: 0.2,
-    max_tokens: 1024,
-    response_format: { type: "json_object" },
-  });
+export default async function extractInventoryFromTranslation(
+    inventoryTranslation: string,
+) {
+    const inventoryResponse = await openAIClient.chat.completions.create({
+        model: "gpt-3.5-turbo-0125",
+        messages: [
+            { role: "system", content: SYSTEM_PROMPT },
+            { role: "user", content: inventoryTranslation },
+        ],
+        temperature: 0.2,
+        max_tokens: 1024,
+        response_format: { type: "json_object" },
+    });
 
-  try {
-    if (!inventoryResponse.choices[0].message.content) {
-      throw new Error("Failed To Extract Inventory From Translation");
+    try {
+        if (!inventoryResponse.choices[0].message.content) {
+            throw new Error("Failed To Extract Inventory From Translation");
+        }
+
+        const inventory = JSON.parse(inventoryResponse.choices[0].message.content);
+        return inventory;
+    } catch (error) {
+        console.error(`error: ${error}`);
+        throw new Error("Failed To Extract Inventory From Translation");
     }
-
-    const inventory = JSON.parse(inventoryResponse.choices[0].message.content);
-    return inventory;
-  } catch (error) {
-    console.error(`error: ${error}`);
-    throw new Error("Failed To Extract Inventory From Translation");
-  }
 }
