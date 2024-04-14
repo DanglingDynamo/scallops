@@ -1,11 +1,11 @@
 import { DocumentType, KYCStatus } from "@prisma/client";
 import prisma from "../../prisma";
 
-export async function createKYCRecord(clerkUserId: string, documentType: DocumentType, documentURL: string) {
+export async function createKYCRecord(userId: string, documentType: DocumentType, documentURL: string) {
   const kycRecordExists = await prisma.kYCRecord.findFirst({
     where: {
       user: {
-        clerkId: clerkUserId,
+        id: userId,
       },
     },
   });
@@ -18,7 +18,7 @@ export async function createKYCRecord(clerkUserId: string, documentType: Documen
     data: {
       user: {
         connect: {
-          clerkId: clerkUserId,
+          id: userId,
         },
       },
       documentType,
@@ -51,11 +51,11 @@ export async function updateKYCRecordStatus(kycRecordId: string, status: KYCStat
   return kycRecord;
 }
 
-export async function getKYCRecord(clerkUserId: string) {
+export async function getKYCRecord(userId: string) {
   const kycRecord = await prisma.kYCRecord.findFirst({
     where: {
       user: {
-        clerkId: clerkUserId,
+        id: userId,
       },
     },
   });

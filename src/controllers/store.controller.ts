@@ -4,12 +4,12 @@ import { addStore, findStore } from "../services/store.service";
 export default class StoreController {
   async addStore(req: Request, res: Response) {
     try {
-      const userID = req.clerkUserId;
+      const userID = req.userId;
       if (!userID) {
         res.status(401).json({ status: "fail", message: "user not signed in" });
       }
 
-      const exists = (await findStore(req.clerkUserId)) ? true : false;
+      const exists = (await findStore(req.userId)) ? true : false;
 
       if (exists) {
         return res.status(409).json({ status: "fail", data: { store: "store already exists" } });

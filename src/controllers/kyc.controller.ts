@@ -4,8 +4,8 @@ import { createKYCRecord, getKYCRecord, getPendingKYCRequests, updateKYCRecordSt
 import uploadToFirebase from "../utils/uploadToFirebase";
 
 export async function uploadKYCDocument(req: Request, res: Response) {
-  const clerkUserId = req["clerkUserId"];
-  if (!clerkUserId) {
+  const userId = req["userId"];
+  if (!userId) {
     return res.status(401).json({ status: "fail", message: "Unauthorized" });
   }
 
@@ -22,13 +22,13 @@ export async function uploadKYCDocument(req: Request, res: Response) {
   // Upload KYC Documents
   let documentURL: string | null;
   try {
-    documentURL = await uploadToFirebase(`kyc-documents/${clerkUserId}/${document.originalname}`, document);
+    documentURL = await uploadToFirebase(`kyc-documents/${userId}/${document.originalname}`, document);
   } catch (error) {
     return res.status(400).json({ status: "fail", message: "Failed To Upload KYC Document" });
   }
 
   try {
-    await createKYCRecord(clerkUserId, documentType, documentURL);
+    await createKYCRecord(userId, documentType, documentURL);
     return res.status(200).json({ status: "success", message: "KYC Document Uploaded" });
   } catch (error) {
     console.log(`error: ${error}`);
@@ -73,13 +73,13 @@ export async function rejectKYCRequest(req: Request, res: Response) {
 }
 
 export async function getKYCStatus(req: Request, res: Response) {
-  const clerkUserId = req["clerkUserId"];
-  if (!clerkUserId) {
+  const userId = req["userId"];
+  if (!userId) {
     return res.status(401).json({ status: "fail", message: "Unauthorized" });
   }
 
   try {
-    const kycRecord = await getKYCRecord(clerkUserId);
+    const kycRecord = await getKYCRecord(userId);
     if (!kycRecord) {
       return res.status(404).json({ status: "fail", message: "KYC Record Not Found" });
     }
