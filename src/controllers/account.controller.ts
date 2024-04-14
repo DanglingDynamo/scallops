@@ -1,12 +1,12 @@
 import { Request, Response } from "express";
 import { addAccount, findAccount } from "../services/account.service";
 import { v4 as uuidv4 } from "uuid";
-import { findStore } from "../services/store.service";
+import { findStoreByUser } from "../services/store.service";
 
 export default class AccountController {
     async addAccount(req: Request, res: Response) {
         try {
-            const store = await findStore(req.userId);
+            const store = await findStoreByUser(req.userId);
 
             if (!store) {
                 return res.status(404).json({

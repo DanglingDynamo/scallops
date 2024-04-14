@@ -10,12 +10,6 @@ export default async function verifyJWT(
     const authorization = req.headers.authorization;
     const jwt = authorization ? authorization.split(" ")[1] : "";
     try {
-        if (authorization == "") {
-            return res.status(401).json({
-                status: "error",
-                data: { header: "authorization header is missing" },
-            });
-        }
         if (!JWT_SECRET) {
             return res
                 .status(500)
