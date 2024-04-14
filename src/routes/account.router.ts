@@ -6,4 +6,4 @@ const accountController = new AccountController();
 export const accountRouter = Router();
 accountRouter.use(verifyJWT);
 
-accountRouter.post("/account", accountController.addAccount);
+accountRouter.post("/", accountController.addAccount);

@@ -41,12 +41,12 @@ export async function listProducts(req: Request, res: Response) {
 }
 
 export async function addProduct(req: Request, res: Response) {
-    const image = req.file;
-    if (!image) {
-        return res
-            .status(400)
-            .send({ status: "fail", message: "Image is required" });
-    }
+    // const image = req.file;
+    // if (!image) {
+    //     return res
+    //         .status(400)
+    //         .send({ status: "fail", message: "Image is required" });
+    // }
 
     const userId = req["userId"];
     if (!userId) {
@@ -70,10 +70,10 @@ export async function addProduct(req: Request, res: Response) {
             .send({ status: "fail", data: { fields: "All fields are required" } });
     }
 
-    const imageURL = await uploadToFirebase(
-        `products/${userId}/${image.originalname}`,
-        image,
-    );
+    // const imageURL = await uploadToFirebase(
+    //     `products/${userId}/${image.originalname}`,
+    //     image,
+    // );
 
     try {
         const product = await createProduct(
@@ -82,7 +82,7 @@ export async function addProduct(req: Request, res: Response) {
             description,
             parseFloat(price),
             parseInt(quantity),
-            imageURL,
+            "",
             barcode,
         );
         return res.send({

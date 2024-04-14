@@ -128,7 +128,7 @@ model Order {
   products OrderProduct[]
   payment  Payment?
 
-  buyer_side_hook String
+  buyer_side_hook String?
 
   order_type OrderType
 

@@ -7,4 +7,4 @@ const storeController = new StoreController();
 export const storeRouter = Router();
 storeRouter.use(verifyJWT);
 
-storeRouter.post("/store", storeController.addStore);
+storeRouter.post("/", storeController.addStore);

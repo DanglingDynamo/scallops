@@ -9,6 +9,7 @@ import catalogueRouter from "./routes/catalogue.router";
 import kycRouter from "./routes/kyc.router";
 import { productRouter } from "./routes/product.router";
 import { storeRouter } from "./routes/store.router";
+import { orderRouter } from "./routes/order.router";
 
 dotenv.config();
 
@@ -36,8 +37,9 @@ app.use("/api/v1/auth", authRouter);
 
 app.use("/api/v1/kyc", verifyJWT, kycRouter);
 
-app.use("/api/v1/", storeRouter);
-app.use("/api/v1/", accountRouter);
+app.use("/api/v1/order", orderRouter);
+app.use("/api/v1/store", storeRouter);
+app.use("/api/v1/account", accountRouter);
 app.use("/api/v1/catalogue", verifyJWT, catalogueRouter);
 app.use("/api/v1/product", verifyJWT, productRouter);
 
