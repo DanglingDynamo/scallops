@@ -71,7 +71,7 @@ export async function signIn(req: Request, res: Response) {
             expiresIn: "7d",
         });
 
-        return res.status(201).json({
+        return res.status(200).json({
             status: "success",
             message: "User Signed In",
             data: { token: token },
